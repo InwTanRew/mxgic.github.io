@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Fetching Data</title>
+  <h1 style="color:red;">ยอดขายไอเเดง</h1>
+  <base target="_top">
+  <img src="https://www.phoenixnext.com/img/600/744/resize/catalog/product/m/g/mg0584-01p.jpg" alt="Photo">
+</head>
+<body>
+  <p id="result">Fetching data...</p>
+
+  <script>
+    function updateResult() {
+      fetch('https://www.phoenixnext.com/api/stock/check?sku=MG0584-01P')
+        .then(response => response.json())
+        .then(data => {
+          var originalQty = data.result.qty;
+          var modifiedQty = Math.max(0, originalQty - 9999);
+          document.getElementById('result').textContent = 'ขายไปได้เเล้ว: ' + modifiedQty + ' ชุด';
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error);
+          document.getElementById('result').textContent = 'Error fetching data';
+        });
+    }
+
+    window.onload = updateResult;
+  </script>
+</body>
+</html>
